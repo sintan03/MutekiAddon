@@ -1,0 +1,28 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "§r§o§l§eMuteki Addon v1.0.0§r§f",
+    "description": "You are Muteki!",
+    "uuid": "0556c3b6-21b2-4d91-80c9-6ad0879acad3",
+    "version": [1, 0, 0],
+    "min_engine_version": [
+      1,
+      21,
+      101
+    ]
+  },
+  "modules": [
+    {
+      "description": "You are Muteki!",
+      "type": "resources",
+      "uuid": "257029ec-69b8-4d03-9ca0-f7658deff617",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "547a54b1-885b-4335-853a-f7b7655c6f7f",
+      "version": [1, 0, 0]
+    }
+  ]
+}
