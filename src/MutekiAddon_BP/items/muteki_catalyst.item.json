@@ -21,8 +21,6 @@
 			"minecraft:glint": true,
 			"minecraft:should_despawn": false,
 			"minecraft:wearable": {
-				"dispensable": true,
-				"hides_player_location": true,
 				"protection": 20,
 				"slot": "slot.armor.head"
 			},
