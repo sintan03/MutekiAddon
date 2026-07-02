@@ -30,7 +30,6 @@ world.beforeEvents.entityHurt.subscribe(ev => {
     if (!hasMutekiCatalyst) return;
 
     ev.cancel = true;
-    ev.damage = 0;
 
 });
 
@@ -50,14 +49,14 @@ system.afterEvents.scriptEventReceive.subscribe(ev => {
                 if (!equippableComponent) continue;
 
                 const hasMutekiCatalyst = findMutekiCatalyst(equippableComponent);
-                if (hasMutekiCatalyst) continue;
+                if (!hasMutekiCatalyst) continue;
 
                 const healthComponent = player.getComponent(EntityComponentTypes.Health);
                 if (!healthComponent) continue;
 
                 system.runTimeout(() => {
                     healthComponent.resetToMaxValue();
-                }, 0.99999999);
+                }, 0.9999);
 
             };
 
