@@ -1,0 +1,57 @@
+{
+    "resource_pack_name": "§r§o§l§eMuteki Addon§r§f",
+    "texture_name": "atlas.items",
+    "texture_data": {
+        "mutekiaddon:coal_singularity_fragment": {
+            "textures": "textures/items/coal_singularity_fragment"
+        },
+        "mutekiaddon:coal_singularity": {
+            "textures": "textures/items/coal_singularity"
+        },
+        "mutekiaddon:copper_singularity_fragment": {
+            "textures": "textures/items/copper_singularity_fragment"
+        },
+        "mutekiaddon:copper_singularity": {
+            "textures": "textures/items/copper_singularity"
+        },
+        "mutekiaddon:diamond_singularity_fragment": {
+            "textures": "textures/items/diamond_singularity_fragment"
+        },
+        "mutekiaddon:diamond_singularity": {
+            "textures": "textures/items/diamond_singularity"
+        },
+        "mutekiaddon:emerald_singularity_fragment": {
+            "textures": "textures/items/emerald_singularity_fragment"
+        },
+        "mutekiaddon:emerald_singularity": {
+            "textures": "textures/items/emerald_singularity"
+        },
+        "mutekiaddon:gold_singularity_fragment": {
+            "textures": "textures/items/gold_singularity_fragment"
+        },
+        "mutekiaddon:gold_singularity": {
+            "textures": "textures/items/gold_singularity"
+        },
+        "mutekiaddon:iron_singularity_fragment": {
+            "textures": "textures/items/iron_singularity_fragment"
+        },
+        "mutekiaddon:iron_singularity": {
+            "textures": "textures/items/iron_singularity"
+        },
+        "mutekiaddon:lapis_singularity_fragment": {
+            "textures": "textures/items/lapis_singularity_fragment"
+        },
+        "mutekiaddon:lapis_singularity": {
+            "textures": "textures/items/lapis_singularity"
+        },
+        "mutekiaddon:redstone_singularity_fragment": {
+            "textures": "textures/items/redstone_singularity_fragment"
+        },
+        "mutekiaddon:redstone_singularity": {
+            "textures": "textures/items/redstone_singularity"
+        },
+        "mutekiaddon:muteki_catalyst": {
+            "textures": "textures/items/muteki_catalyst"
+        }
+    }
+}
