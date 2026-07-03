@@ -1,0 +1,25 @@
+mutekiaddon:itemGroup.name.singularity=Singularity
+
+mutekiaddon.dire_crafting_table.table_name=Dire Craft
+
+tile.mutekiaddon:dire_crafting_table.name=Dire Crafting table
+
+item.mutekiaddon:coal_singularity_fragment=§bCoal Singularity Fragment§r§f
+item.mutekiaddon:copper_singularity_fragment=§bCopper Singularity Fragment§r§f
+item.mutekiaddon:diamond_singularity_fragment=§bDiamond Singularity Fragment§r§f
+item.mutekiaddon:emerald_singularity_fragment=§bEmerald Singularity Fragment§r§f
+item.mutekiaddon:gold_singularity_fragment=§bGold Singularity Fragment§r§f
+item.mutekiaddon:iron_singularity_fragment=§bIron Singularity Fragment§r§f
+item.mutekiaddon:lapis_singularity_fragment=§bLapis Singularity Fragment§r§f
+item.mutekiaddon:redstone_singularity_fragment=§bRedstone Singularity Fragment§r§f
+
+item.mutekiaddon:coal_singularity=§dCoal Singularity§r§f
+item.mutekiaddon:copper_singularity=§dCopper Singularity§r§f
+item.mutekiaddon:diamond_singularity=§dDiamond Singularity§r§f
+item.mutekiaddon:emerald_singularity=§dEmerald Singularity§r§f
+item.mutekiaddon:gold_singularity=§dGold Singularity§r§f
+item.mutekiaddon:iron_singularity=§dIron Singularity§r§f    
+item.mutekiaddon:lapis_singularity=§dLapis Singularity§r§f
+item.mutekiaddon:redstone_singularity=§dRedstone Singularity§r§f
+
+item.mutekiaddon:muteki_catalyst=§r§l§o§eMuteki Catalyst§r§f
