@@ -1,0 +1,60 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "mutekiaddon:muteki_catalyst.recipe"
+        },
+        "tags": [ "crafting_dire" ],
+        "priority": 1,
+        "ingredients": [
+            {
+                "item": "mutekiaddon:coal_singularity",
+                "count": 1
+            },
+            {
+                "item": "mutekiaddon:copper_singularity",
+                "count": 1
+            },
+            {
+                "item": "mutekiaddon:diamond_singularity",
+                "count": 1
+            },
+            {
+                "item": "mutekiaddon:emerald_singularity",
+                "count": 1
+            },
+            {
+                "item": "minecraft:nether_star",
+                "count": 1
+            },
+            {
+                "item": "mutekiaddon:gold_singularity",
+                "count": 1
+            },
+            {
+                "item": "mutekiaddon:iron_singularity",
+                "count": 1
+            },
+            {
+                "item": "mutekiaddon:lapis_singularity",
+                "count": 1
+            },
+            {
+                "item": "mutekiaddon:redstone_singularity",
+                "count": 1
+            }
+        ],
+        "unlock": [
+            {
+                "item": "minecraft:nether_star"
+            },
+            {
+                "item": "minecraft:diamond"
+            }
+        ],
+        "result": {
+            "item": "mutekiaddon:muteki_catalyst",
+            "count": 1
+        }
+    }
+}
