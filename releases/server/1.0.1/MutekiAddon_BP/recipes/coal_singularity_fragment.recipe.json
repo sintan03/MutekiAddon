@@ -1,0 +1,25 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "mutekiaddon:coal_singularity_fragment.recipe"
+        },
+        "tags": [ "crafting_dire" ],
+        "priority": 1,
+        "ingredients": [
+            {
+                "item": "minecraft:coal_block",
+                "count": 9
+            }
+        ],
+        "unlock": [
+            {
+                "item": "minecraft:coal_block"
+            }
+        ],
+        "result": {
+            "item": "mutekiaddon:coal_singularity_fragment",
+            "count": 1
+        }
+    }
+}
