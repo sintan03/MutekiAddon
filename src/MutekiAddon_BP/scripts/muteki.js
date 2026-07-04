@@ -2,7 +2,11 @@ import { world, system, EntityComponentTypes, EquipmentSlot, EntityEquippableCom
 
 const mutekiCatalyst = `mutekiaddon:muteki_catalyst`;
 
+const muteki_ticks = 100;
+
 const findSlots = [EquipmentSlot.Mainhand, EquipmentSlot.Offhand, EquipmentSlot.Head];
+
+const hadMuteki = /** @type { Map<String, Number> } */ (new Map());
 
 const mutekiAbilities = [
     {
@@ -50,12 +54,10 @@ const events = [
     "blockExplode",
     "buttonPush",
     "dataDrivenEntityTrigger",
-    "effectAdd",
     "entityContainerClosed",
     "entityContainerOpened",
     "entityDie",
     "entityHeal",
-    "entityHealthChanged",
     "entityHitBlock",
     "entityHitEntity",
     "entityHurt",
@@ -116,14 +118,11 @@ function muteki() {
 
     for (const player of players) {
 
-        const equippableComponent = player.getComponent(EntityComponentTypes.Equippable);
-        if (!equippableComponent) return;
-
-        const hasMutekiCatalyst = findMutekiCatalyst(equippableComponent);
-        if (!hasMutekiCatalyst) return;
+        const remain = hadMuteki.get(player.id) ?? 0;
+        if (remain === 0) continue;
 
         const healthComponent = player.getComponent(EntityComponentTypes.Health);
-        if (!healthComponent) return;
+        if (!healthComponent) continue;
 
         system.runTimeout(() => {
             healthComponent.resetToMaxValue();
@@ -139,11 +138,22 @@ system.runInterval(() => {
 
     for (const player of players) {
 
+        let remain = hadMuteki.get(player.id) ?? 0;
+
         const equippableComponent = player.getComponent(EntityComponentTypes.Equippable);
-        if (!equippableComponent) return;
+        if (!equippableComponent) continue;
 
         const hasMutekiCatalyst = findMutekiCatalyst(equippableComponent);
-        if (!hasMutekiCatalyst) return;
+        if (hasMutekiCatalyst) {
+            remain = muteki_ticks;
+        } else if (remain > 0) {
+            remain--;
+        } else {
+            if (hadMuteki.has(player.id)) hadMuteki.delete(player.id);
+            continue;
+        };
+
+        hadMuteki.set(player.id, remain);
 
         system.runTimeout(() => {
             const healthComponent = player.getComponent(EntityComponentTypes.Health);
@@ -165,13 +175,32 @@ world.beforeEvents.entityHurt.subscribe(ev => {
 
     if (!(hurtEntity instanceof Player)) return;
 
-    const equippableComponent = hurtEntity.getComponent(EntityComponentTypes.Equippable);
-    if (!equippableComponent) return;
-
-    const hasMutekiCatalyst = findMutekiCatalyst(equippableComponent);
-    if (!hasMutekiCatalyst) return;
+    const remain = hadMuteki.get(hurtEntity.id) ?? 0;
+    if (remain === 0) return;
 
     ev.cancel = true;
+
+});
+
+world.afterEvents.entityHealthChanged.subscribe(ev => {
+
+    const { entity } = ev;
+
+    if (!(entity instanceof Player)) return;
+
+    const remain = hadMuteki.get(entity.id) ?? 0;
+    if (remain === 0) return;
+
+    system.runTimeout(() => {
+
+        const healthComponent = entity.getComponent(EntityComponentTypes.Health);
+        if (!healthComponent) return;
+
+        if (healthComponent.currentValue <= 0) {
+            healthComponent.resetToMaxValue();
+        };
+
+    }, 0.99);
 
 });
 
@@ -184,3 +213,7 @@ for (const event of events) {
         console.error(event);
     };
 };
+
+system.afterEvents.scriptEventReceive.subscribe(ev => {
+    muteki();
+});
