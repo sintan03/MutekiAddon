@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "mutekiaddon:dire_crafting_table.recipe"
+        },
+        "tags": [ "crafting_table" ],
+        "priority": 1,
+        "key": {
+            "D": {
+                "item": "minecraft:diamond_block"
+            },
+            "#": {
+                "item": "minecraft:crafting_table"
+            }
+        },
+        "pattern": [
+            "DDD",
+            "D#D",
+            "DDD"
+        ],
+        "unlock": [
+            {
+                "item": "minecraft:diamond"
+            }
+        ],
+        "result": {
+            "item": "mutekiaddon:dire_crafting_table",
+            "count": 1
+        }
+    }
+}
