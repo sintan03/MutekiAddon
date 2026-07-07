@@ -1,0 +1,25 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "mutekiaddon:iron_singularity_fragment.recipe"
+        },
+        "tags": [ "crafting_dire" ],
+        "priority": 1,
+        "ingredients": [
+            {
+                "item": "minecraft:iron_block",
+                "count": 9
+            }
+        ],
+        "unlock": [
+            {
+                "item": "minecraft:iron_block"
+            }
+        ],
+        "result": {
+            "item": "mutekiaddon:iron_singularity_fragment",
+            "count": 1
+        }
+    }
+}
