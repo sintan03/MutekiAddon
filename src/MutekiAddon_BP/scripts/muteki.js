@@ -6,7 +6,7 @@ const muteki_ticks = 100;
 
 const findSlots = [EquipmentSlot.Mainhand, EquipmentSlot.Offhand, EquipmentSlot.Head];
 
-const hadMuteki = /** @type { Map<String, Number> } */ (new Map());
+const hadMuteki = /** @type { Map<String, { "remain": Number, "noheal": Boolean }> } */ (new Map());
 
 const mutekiAbilities = [
     {
@@ -28,11 +28,11 @@ const mutekiAbilities = [
     {
         typeId: `minecraft:night_vision`,
         amplifier: 0,
-        duration: 205
+        duration: 300
     },
     {
-        typeId: `minecraft:water_breathing`,
-        amplifier: 0,
+        typeId: `minecraft:conduit_power`,
+        amplifier: 4,
     },
     {
         typeId: `minecraft:saturation`,
@@ -53,11 +53,9 @@ const events = [
     "blockContainerOpened",
     "blockExplode",
     "buttonPush",
-    "dataDrivenEntityTrigger",
     "entityContainerClosed",
     "entityContainerOpened",
     "entityDie",
-    "entityHeal",
     "entityHitBlock",
     "entityHitEntity",
     "entityHurt",
@@ -118,8 +116,8 @@ function muteki() {
 
     for (const player of players) {
 
-        const remain = hadMuteki.get(player.id) ?? 0;
-        if (remain === 0) continue;
+        const mutekiMap = hadMuteki.get(player.id);
+        if (!mutekiMap) continue;
 
         const healthComponent = player.getComponent(EntityComponentTypes.Health);
         if (!healthComponent) continue;
@@ -138,22 +136,29 @@ system.runInterval(() => {
 
     for (const player of players) {
 
-        let remain = hadMuteki.get(player.id) ?? 0;
+        const mutekiMap = hadMuteki.get(player.id);
 
         const equippableComponent = player.getComponent(EntityComponentTypes.Equippable);
         if (!equippableComponent) continue;
 
         const hasMutekiCatalyst = findMutekiCatalyst(equippableComponent);
-        if (hasMutekiCatalyst) {
-            remain = muteki_ticks;
-        } else if (remain > 0) {
-            remain--;
+        if (!mutekiMap) {
+            if (hasMutekiCatalyst) {
+                hadMuteki.set(player.id, { "remain": 100, "noheal": true });
+            };
         } else {
-            if (hadMuteki.has(player.id)) hadMuteki.delete(player.id);
-            continue;
+            if (hasMutekiCatalyst) {
+                mutekiMap.remain = muteki_ticks;
+            } else if (mutekiMap.remain > 0) {
+                mutekiMap.remain--;
+            } else {
+                if (hadMuteki.has(player.id)) hadMuteki.delete(player.id);
+                continue;
+            };
+            if (!mutekiMap.noheal) mutekiMap.noheal = true;
         };
 
-        hadMuteki.set(player.id, remain);
+        if (mutekiMap.remain < 0) continue;
 
         system.runTimeout(() => {
             const healthComponent = player.getComponent(EntityComponentTypes.Health);
@@ -175,8 +180,8 @@ world.beforeEvents.entityHurt.subscribe(ev => {
 
     if (!(hurtEntity instanceof Player)) return;
 
-    const remain = hadMuteki.get(hurtEntity.id) ?? 0;
-    if (remain === 0) return;
+    const mutekiMap = hadMuteki.get(hurtEntity.id);
+    if (!mutekiMap) return;
 
     ev.cancel = true;
 
@@ -188,8 +193,8 @@ world.afterEvents.entityHealthChanged.subscribe(ev => {
 
     if (!(entity instanceof Player)) return;
 
-    const remain = hadMuteki.get(entity.id) ?? 0;
-    if (remain === 0) return;
+    const mutekiMap = hadMuteki.get(entity.id);
+    if (!mutekiMap || !mutekiMap.noheal) return;
 
     system.runTimeout(() => {
 
@@ -198,9 +203,19 @@ world.afterEvents.entityHealthChanged.subscribe(ev => {
 
         if (healthComponent.currentValue <= 0) {
             healthComponent.resetToMaxValue();
+            mutekiMap.noheal = false;
         };
 
     }, 0.99);
+
+});
+
+world.beforeEvents.playerLeave.subscribe(ev => {
+
+    const { player } = ev;
+    if (hadMuteki.has(player.id)) {
+        hadMuteki.delete(player.id);
+    };
 
 });
 
