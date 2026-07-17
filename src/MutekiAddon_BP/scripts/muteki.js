@@ -158,7 +158,7 @@ system.runInterval(() => {
             if (!mutekiMap.noheal) mutekiMap.noheal = true;
         };
 
-        if (mutekiMap.remain < 0) continue;
+        if (!mutekiMap || mutekiMap.remain < 0) continue;
 
         system.runTimeout(() => {
             const healthComponent = player.getComponent(EntityComponentTypes.Health);
