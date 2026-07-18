@@ -6,7 +6,7 @@ const muteki_ticks = 100;
 
 const findSlots = [EquipmentSlot.Mainhand, EquipmentSlot.Offhand, EquipmentSlot.Head];
 
-const hadMuteki = /** @type { Map<String, { "remain": Number, "noheal": Boolean }> } */ (new Map());
+const hadMuteki = /** @type { Map<String, { "remain": Number, "heal": Number }> } */ (new Map());
 
 const mutekiAbilities = [
     {
@@ -144,18 +144,18 @@ system.runInterval(() => {
         const hasMutekiCatalyst = findMutekiCatalyst(equippableComponent);
         if (!mutekiMap) {
             if (hasMutekiCatalyst) {
-                hadMuteki.set(player.id, { "remain": 100, "noheal": true });
+                hadMuteki.set(player.id, { "remain": 100, "heal": 2 });
             };
         } else {
             if (hasMutekiCatalyst) {
                 mutekiMap.remain = muteki_ticks;
             } else if (mutekiMap.remain > 0) {
-                mutekiMap.remain--;
+                mutekiMap.remain -= 1;
             } else {
                 if (hadMuteki.has(player.id)) hadMuteki.delete(player.id);
                 continue;
             };
-            if (!mutekiMap.noheal) mutekiMap.noheal = true;
+            if (!mutekiMap.heal) mutekiMap.heal = 2;
         };
 
         if (!mutekiMap || mutekiMap.remain < 0) continue;
@@ -187,28 +187,28 @@ world.beforeEvents.entityHurt.subscribe(ev => {
 
 });
 
-world.afterEvents.entityHealthChanged.subscribe(ev => {
+// world.afterEvents.entityHealthChanged.subscribe(ev => {
 
-    const { entity } = ev;
+//     const { entity } = ev;
 
-    if (!(entity instanceof Player)) return;
+//     if (!(entity instanceof Player)) return;
 
-    const mutekiMap = hadMuteki.get(entity.id);
-    if (!mutekiMap || !mutekiMap.noheal) return;
+//     const mutekiMap = hadMuteki.get(entity.id);
+//     if (!mutekiMap) return;
 
-    system.runTimeout(() => {
+//     system.runTimeout(() => {
 
-        const healthComponent = entity.getComponent(EntityComponentTypes.Health);
-        if (!healthComponent) return;
+//         const healthComponent = entity.getComponent(EntityComponentTypes.Health);
+//         if (!healthComponent) return;
 
-        if (healthComponent.currentValue <= 0) {
-            healthComponent.resetToMaxValue();
-            mutekiMap.noheal = false;
-        };
+//         if (healthComponent.currentValue <= 0 || mutekiMap.heal > 0) {
+//             healthComponent.resetToMaxValue();
+//             mutekiMap.heal -= 1;
+//         };
 
-    }, 0.99);
+//     }, 0.99);
 
-});
+// });
 
 world.beforeEvents.playerLeave.subscribe(ev => {
 
